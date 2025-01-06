@@ -1,0 +1,27 @@
+stages:
+  - build
+  - test
+
+build-car:
+  image: alpine # Docker image based on Alpine Linux Distribution
+  stage: build
+  script:
+    - echo "Building the car"
+    - mkdir build
+    - cd build
+    - echo "chassis" >> car.txt
+    - echo "engine" >> car.txt
+    - echo "wheels" >> car.txt
+    - cat car.txt
+  artifacts:
+    paths:
+      - build/
+
+test-car:
+  image: alpine
+  stage: test
+  script:
+    - test -f build/car.txt # Linux CMD: to check if a file is exists
+    - grep "chassis" build/car.txt
+    - grep "engine" build/car.txt
+    - grep "wheels" build/car.txt
